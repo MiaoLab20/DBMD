@@ -34,27 +34,28 @@ from tensorflow.keras.losses import KLDivergence, Reduction
 from tensorflow.keras.callbacks import ModelCheckpoint
 import tensorflow as tf
 import tensorflow_probability as tfp
-from deeplearningmodel import *
+from deeplearningmodel2 import *
 from math import sqrt
 from utils import *
 
 tfpd = tfp.distributions
 tfpl = tfp.layers
 
-adjust_boost = 0.5 * 4.184
+totadjustboost, dihadjustboost = 0 * 4.184, 0 * 4.184
+
 totalcp_path = "cmd-cptot/cptot-{epoch:04d}.ckpt"
 totalcp_dir = os.path.dirname(totalcp_path)
 latest_totalcp = tf.train.latest_checkpoint(totalcp_dir)
 modeltot = fullModel(nbsteps)
 modeltot.load_weights(latest_totalcp)
-totalboost = np.absolute(adjust_boost + modeltot.predict(np.asarray([totalEnergy])).flatten()[0] * 4.184)
+totalboost = np.absolute(totadjustboost + modeltot.predict(np.asarray([totalEnergy])).flatten()[0] * 4.184)
 
 dihedralcp_path = "cmd-cpdih/cpdih-{epoch:04d}.ckpt"
 dihedralcp_dir = os.path.dirname(dihedralcp_path)
 latest_dihedralcp = tf.train.latest_checkpoint(dihedralcp_dir)
 modeldih = fullModel(nbsteps)
 modeldih.load_weights(latest_dihedralcp)
-dihedralboost = np.absolute(adjust_boost + modeldih.predict(np.asarray([dihedralEnergy])).flatten()[0] * 4.184)
+dihedralboost = np.absolute(dihadjustboost + modeldih.predict(np.asarray([dihedralEnergy])).flatten()[0] * 4.184)
 
 from openmm.app.statedatareporter import StateDataReporter
 from openmm.app import *

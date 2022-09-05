@@ -23,7 +23,7 @@ from tensorflow.keras.losses import KLDivergence, Reduction
 from tensorflow.keras.callbacks import ModelCheckpoint
 import tensorflow as tf
 import tensorflow_probability as tfp
-from deeplearningmodel import *
+from deeplearningmodel2 import *
 from math import sqrt
 from DLGaMDEquilibrationIntegrator import *
 from utils import *
@@ -38,8 +38,9 @@ from openmm.unit import *
 """
 OpenMM Application Manual: http://docs.openmm.org/7.2.0/userguide/application.html
 """
-prmtop = AmberPrmtopFile("dip.top")
+prmtop = AmberPrmtopFile("gcaa_unfold.top")
 system = prmtop.createSystem(nonbondedMethod=PME, nonbondedCutoff=8*angstrom, constraints=HBonds)
+# system = prmtop.createSystem(implicitSolvent=GBn2, implicitSolventKappa=1.0/nanometer, soluteDielectric=1.0, solventDielectric=78.5)
 set_dihedral_group(system)
 
 integrator = DualDeepLearningGaMDEquilibration(0.002*picoseconds, 300*kelvins)
@@ -49,8 +50,8 @@ if isExist:
     os.remove("equil.mdout")
 simulation = Simulation(prmtop.topology, system, integrator)
 simulation.loadState("cmd.rst")
-simulation.reporters.append(DCDReporter("equil.dcd", 100))
-simulation.reporters.append(ExpandedStateDataReporter(system, "equil.mdout", 100, step=True, temperature=True,
+simulation.reporters.append(DCDReporter("equil.dcd", 400))
+simulation.reporters.append(ExpandedStateDataReporter(system, "equil.mdout", 400, step=True, temperature=True,
                                                     brokenOutForceEnergies=True, potentialEnergy=True,
                                                     totalEnergy=True, density=True, separator="\t",
                                                     speed=True, remainingTime=True, totalSteps=25000000))
@@ -67,12 +68,12 @@ gamdLog.write("# ntwx,total_nstep,Total-Energy,Dihedral-Energy,Total-Force-Weigh
 gamdLog.close()
 
 DihedralEnergies, TotalEnergies = [], []
-for step in np.arange(0, 250000):
-    simulation.step(100)
-    if (step + 1) % 100 == 0: 
+for step in np.arange(0, 62500):
+    simulation.step(400)
+    if (step + 1) % 400 == 0: 
         simulation.saveState("equil.rst")
     gamdLog = open("equil.log", "a")
-    gamdLog.write(str(100) + "\t" + str((step+1)*100) + "\t"
+    gamdLog.write(str(400) + "\t" + str((step+1)*400) + "\t"
                 + str(integrator.getGlobalVariableByName("TotalEnergy") / 4.184) + "\t"
                 + str(integrator.getGlobalVariableByName("DihedralEnergy") / 4.184) + "\t"
                 + str(integrator.getGlobalVariableByName("TotalForceScalingFactor")) + "\t"
@@ -89,14 +90,14 @@ for step in np.arange(0, 250000):
                 + str(integrator.getGlobalVariableByName("DihedralBoostMode")) + "\n")
     gamdLog.close()
 
-    dihedralboost = np.absolute(adjust_boost + modeldih.predict(np.asarray([integrator.getGlobalVariableByName("DihedralEnergy") / 4.184])).flatten()[0] * 4.184)
+    dihedralboost = np.absolute(dihadjustboost + modeldih.predict(np.asarray([integrator.getGlobalVariableByName("DihedralEnergy") / 4.184])).flatten()[0] * 4.184)
     integrator.setGlobalVariableByName("DihedralBoostPotential", dihedralboost)
-    totalboost = np.absolute(adjust_boost + modeltot.predict(np.asarray([integrator.getGlobalVariableByName("TotalEnergy") / 4.184])).flatten()[0] * 4.184)
+    totalboost = np.absolute(totadjustboost + modeltot.predict(np.asarray([integrator.getGlobalVariableByName("TotalEnergy") / 4.184])).flatten()[0] * 4.184)
     integrator.setGlobalVariableByName("TotalBoostPotential", totalboost)
 
     DihedralEnergies.append(integrator.getGlobalVariableByName("DihedralEnergy") / 4.184)
     TotalEnergies.append(integrator.getGlobalVariableByName("TotalEnergy") / 4.184)
-    if (step + 1) % 10 == 0:
+    if (step + 1) % 250 == 0:
         min_dihedral, max_dihedral = min(DihedralEnergies) * 4.184, max(DihedralEnergies) * 4.184
         min_total, max_total = min(TotalEnergies) * 4.184, max(TotalEnergies) * 4.184
         integrator.setGlobalVariableByName("VminD", min_dihedral)
