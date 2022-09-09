@@ -8,7 +8,7 @@ import numpy as np
 tfpd = tfp.distributions
 tfpl = tfp.layers
 
-mu, sigma = 0.0, 4.0
+mu, sigma = 0.5, 1.0
 
 def priorModel(kernel_size, bias_size, dtype=None):
     size_sum = kernel_size + bias_size
@@ -30,7 +30,7 @@ def fullModel(nbsteps):
         full_model.add(tfpl.DenseVariational(64, input_dim=1,
                                         make_prior_fn=priorModel, make_posterior_fn=postModel,
                                         kl_weight=1/nbsteps, kl_use_exact=False, activation="sigmoid"))
-    for _ in np.arange(0,1):
+    for _ in np.arange(0,3):
         full_model.add(tfpl.DenseVariational(tfpl.IndependentNormal.params_size(1),
                                         make_prior_fn=priorModel, make_posterior_fn=postModel,
                                         kl_weight=1/nbsteps, kl_use_exact=False))
