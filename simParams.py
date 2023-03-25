@@ -5,19 +5,19 @@ simType = "RNA.implicit"    # "explicit", "protein.implicit", "RNA.implicit"
 nbCutoff = 9.0      # if "explicit"
 temperature = 300
 
-ntcmd = 15000000
-cmdRestartFreq = 500
+ntcmd = 10000000
+cmdRestartFreq = 100
 
-ncycebprepstart, ncycebprepend = 0, 2
-ntebpreppercyc = 5000000
-ebprepRestartFreq = 500
+ncycebprepstart, ncycebprepend = 0, 1
+ntebpreppercyc = 2500000
+ebprepRestartFreq = 100
 
 ncycebstart, ncycebend = 0, 3
-ntebpercyc = 5000000
-ebRestartFreq = 500
+ntebpercyc = 2500000
+ebRestartFreq = 100
 
-ncycprodstart, ncycprodend = 0, 5
-ntprodpercyc = 100000000
+ncycprodstart, ncycprodend = 0, 4
+ntprodpercyc = 250000000
 prodRestartFreq = 500
 
-refED_factor, refEP_factor = 0.05, 0.05      # between 0 and 1
+refEP_factor, refED_factor = 0.05, 0.05      # between 0 and 1
