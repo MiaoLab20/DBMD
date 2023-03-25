@@ -1,9 +1,8 @@
 #!/bin/bash
-source activate aigamd
 export CUDA_VISIBLE_DEVICES=1
 
-# python simulationCmdStage.py
-# python simulationEquilPrepStage.py
-# python simulationEquilStage.py
+python simulationCmdStage.py
+python simulationEquilPrepStage.py
+python simulationEquilStage.py
 
 python simulationProdStage.py
