@@ -20,4 +20,4 @@ ncycprodstart, ncycprodend = 0, 5
 ntprodpercyc = 100000000
 prodRestartFreq = 500
 
-refED_factor, refEP_factor = 0.0, 0.025      # between 0 and 1
+refED_factor, refEP_factor = 0.05, 0.05      # between 0 and 1
