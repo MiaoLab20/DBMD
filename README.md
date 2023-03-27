@@ -17,7 +17,7 @@ It is recommended to install these modules and run AIBMD in OpenMM in an Anacond
 An example input file for an AIBMD simulation can be found in ***simParams.py***. A run script can be found in ***runSimulation***. To run the ***test*** folder, simply install all the necessary *python* modules and run the following commands as following:
 > sh runSimulation
 
-Explanations for all parameters in the example input file can be found at the reference below.
+Explanations for all parameters in the example input file can be found at the reference below. It is recommended to set up and run AIBMD in OpenMM on NVIDIA GPUs to achieve the best possible speeds.
 
 # Reference
 Do, H.N. and Miao, Y. (2023) Artificial Intelligence Boosted Molecular Dynamics. *bioRxiv*. BIORXIV/2023/534210
