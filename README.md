@@ -17,7 +17,7 @@ An example ***test*** folder that contains the input topology and coordinate fil
 
 It is recommended to install these modules and run DBMD in OpenMM in an Anaconda environment: https://www.anaconda.com/
 
-An example input file for an DBMD simulation can be found in ***simParams.py***. A run script can be found in ***runSimulation***. To run the ***test*** folder, simply install all the necessary *python* modules and run the following commands as following:
+An example input file for an DBMD simulation can be found in ***simParams.py***. A run script can be found in ***runSimulation***. To run the ***test*** folder, simply install all the necessary *python* modules and run the following commands:
 
 ***sh runSimulation***
 
