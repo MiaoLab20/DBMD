@@ -24,4 +24,4 @@ An example input file for an DBMD simulation can be found in ***simParams.py***.
 Explanations for all parameters in the example input file can be found at the reference below. It is recommended to set up and run DBMD in OpenMM on NVIDIA GPUs to achieve the best possible speeds.
 
 # Reference
-Do, H.N. and Miao, Y. (2023) Deep Boosted Molecular Dynamics (DBMD): Accelerating molecular simulations with Gaussian boost potentials generated using probabilistic Bayesian deep neural network. *bioRxiv*. https://www.biorxiv.org/content/10.1101/2023.03.25.534210v2
+Do, H.N. and Miao, Y. (2023) Deep Boosted Molecular Dynamics (DBMD): Accelerating molecular simulations with Gaussian boost potentials generated using probabilistic Bayesian deep neural network. *The Journal of Physical Chemistry Letters*. https://doi.org/10.1021/acs.jpclett.3c00926
