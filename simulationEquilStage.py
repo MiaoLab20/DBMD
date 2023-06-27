@@ -50,8 +50,8 @@ for cycle in np.arange(ncycebstart, ncycebend):
         column_names = ["Steps", "PotentialEnergy", "TotalEnergy", "Temperature", "Density", "Speed",
                     "TimeRemaining", "HarmonicBondForce", "HarmonicAngleForce", "PeriodicTorsionForce",
                     "NonbondedForce", "CMMotionRemover"]
-    if cycle == 0: df = pd.read_csv("equil-prep.mdout", names=column_names, header=0, delimiter="\t")
-    else: df = pd.read_csv("equil.mdout", names=column_names, header=0, delimiter="\t")
+    if cycle == 0: df = pd.read_csv("equil-prep.mdout", names=column_names, header=0, delimiter="\t", index_col=False)
+    else: df = pd.read_csv("equil.mdout", names=column_names, header=0, delimiter="\t", index_col=False)
 
     steps = df.Steps.to_list()
     steps = np.array(steps[-10000:])
@@ -232,7 +232,7 @@ for cycle in np.arange(ncycebstart, ncycebend):
     else: simulation.loadState("equil.rst")
 
     column_names = ["Parameters", "Values"]
-    gamdRestart = pd.read_csv("gamd-restart.dat", names=column_names, header=0, delimiter="\t")
+    gamdRestart = pd.read_csv("gamd-restart.dat", names=column_names, header=0, delimiter="\t", index_col=False)
     boost_parameters = gamdRestart.Values.to_list()
     boost_parameters = np.array(boost_parameters)
     min_dihedral, max_dihedral = boost_parameters[1] * 4.184, boost_parameters[2] * 4.184

@@ -24,7 +24,7 @@ for cycle in np.arange(ncycprodstart, ncycprodend):
     else: simulation.loadState("gamd.rst")
 
     column_names = ["Parameters", "Values"]
-    gamdRestart = pd.read_csv("gamd-restart.dat", names=column_names, header=0, delimiter="\t")
+    gamdRestart = pd.read_csv("gamd-restart.dat", names=column_names, header=0, delimiter="\t", index_col=False)
     boost_parameters = gamdRestart.Values.to_list()
     boost_parameters = np.array(boost_parameters)
     min_dihedral, max_dihedral = boost_parameters[1] * 4.184, boost_parameters[2] * 4.184
