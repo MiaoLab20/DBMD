@@ -1,5 +1,6 @@
 #!/bin/bash
-export CUDA_VISIBLE_DEVICES=1
+#Set the number to the appropriate GPU
+export CUDA_VISIBLE_DEVICES=0
 
 python simulationCmdStage.py
 python simulationEquilPrepStage.py

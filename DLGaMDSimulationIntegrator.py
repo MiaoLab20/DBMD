@@ -6,7 +6,7 @@ restartFile = "gamd-restart.dat"
 isExist = os.path.exists(restartFile)
 if isExist:
     column_names = ["Parameters", "Values"]
-    gamdRestart = pd.read_csv("gamd-restart.dat", names=column_names, header=0, delimiter="\t")
+    gamdRestart = pd.read_csv("gamd-restart.dat", names=column_names, header=0, delimiter="\t", index_col=False)
     boost_parameters = gamdRestart.Values.to_list()
     boost_parameters = np.array(boost_parameters)
 
