@@ -1,18 +1,3 @@
-from tensorflow.compat.v1 import ConfigProto
-from tensorflow.compat.v1 import InteractiveSession
-def fix_gpu():
-    config = ConfigProto()
-    config.gpu_options.allow_growth = True
-    session = InteractiveSession(config=config)
-fix_gpu()
-
-import warnings
-warnings.filterwarnings("ignore")
-
-import matplotlib as mpl
-mpl.rcParams['agg.path.chunksize'] = 10000
-mpl.use("Agg")
-
 import pandas as pd, numpy as np, os, sys
 import seaborn as sns
 import matplotlib.pyplot as plt
